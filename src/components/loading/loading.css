@@ -1,0 +1,15 @@
+.loading{
+    animation: rodar .9s linear infinite ;
+    transform-origin: center;
+    font-size: 2rem;
+}
+
+
+
+@keyframes rodar{
+    to{
+        transform: rotate(0deg);
+    }from{
+        transform: rotate(360deg);
+    }
+}
