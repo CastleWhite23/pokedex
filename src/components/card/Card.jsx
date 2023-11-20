@@ -1,9 +1,9 @@
 import "./card.css"
 
-const Card = ( { name }) =>{
+const Card = ( { name, link }) =>{
     return(
         <div className="card">
-            <img src="" alt="img do pokemon" />
+            <img src={ link } alt="img do pokemon" />
             <h1>{ name }</h1>       
         </div>
     )

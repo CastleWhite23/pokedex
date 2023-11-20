@@ -9,4 +9,11 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+
+.card:hover{
+   transform: scale(.96);
+   opacity: .8;
 }
