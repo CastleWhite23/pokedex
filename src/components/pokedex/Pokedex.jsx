@@ -1,42 +1,44 @@
+import Card from '../card/Card';
 import './pokedex.css'
-
-const api = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20";
-
-const getPokemonsData = async (api) => {
-    const res = await fetch(api);
-    const pokemonsData = await res.json()
-
-    return pokemonsData;
-}
-
-
-
-
-const getPokemons = async (pokemonData) => {
-    const pokemons = await pokemonData.results;
-    return pokemons;
-}
-
-try{
-    const pokemonData = await getPokemonsData(api);
-    
-    const pokemons = await getPokemons(pokemonData)
-
-}catch{
-    console.log("Não funcionou")
-}
-
-
-
-
+import { useEffect, useState } from 'react';
 
 
 
 
 const Pokedex = () => {
+    const [pokemon, setPokemon] = useState([]);
+
+    useEffect(() => {
+        const api = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20";
+
+        const getPokemonsData = async (api) => {
+            try {
+                const res = await fetch(api);
+                const pokemonsData = await res.json()
+
+                const pokemons = pokemonsData.results;
+
+                setPokemon(pokemons);
+            } catch {
+                console.log("erro na solicitação da api")
+                return;
+            }
+
+        }
+        getPokemonsData(api);
+
+
+    }, [])
+
+    
     return (
         <div className='pokedex'>
-            oi
+            {
+
+                pokemon.map((poke) => (
+                    <Card key={Math.floor(10000 * Math.random())} name={poke.name} />
+                ))
+            }
         </div>
     )
 }
