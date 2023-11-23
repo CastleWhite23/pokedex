@@ -1,5 +1,6 @@
 
 import './App.css';
+import LoadMore from './components/loadMore/loadMore';
 import Pokedex from './components/pokedex/Pokedex';
 
 function App() {

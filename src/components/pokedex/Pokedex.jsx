@@ -2,6 +2,7 @@ import Card from '../card/Card';
 import Loading from '../loading/Loading';
 
 
+
 import './pokedex.css'
 import { useEffect, useState } from 'react';
 
@@ -11,12 +12,14 @@ import { useEffect, useState } from 'react';
 const Pokedex = () => {
     const [pokemon, setPokemon] = useState([]);
     const [linksImages, setLinksImages] = useState([]);
+    const [pokeType, setPokeType] = useState([]);
     const [pokeImg, setPokeImg] = useState([{}]);
     const [loading, setLoading] = useState(false);
+    const api = "https://pokeapi.co/api/v2/pokemon/?offset=60&limit=60";
 
     useEffect(() => {
         setLoading(false);
-        const api = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20";
+       
 
         ///
 
@@ -41,60 +44,78 @@ const Pokedex = () => {
 
     useEffect(() => {
 
-        const getLinkImage = async (name) => {
+        const getPokeDetails= async (name, link = null) => {
             try {
                 const apiLinkImage = "https://pokeapi.co/api/v2/pokemon/" + name;
                 const res = await fetch(apiLinkImage);
                 const pokemonLinkImage = await res.json();
-
+                
+                //pegar por aqui o tipo do pokemon
                 // console.log(await pokemonLinkImage.sprites.front_default)
-                return await pokemonLinkImage.sprites.front_default;
-
+                if(link){
+                    return await pokemonLinkImage.sprites.front_default;
+                }else{
+                    return await pokemonLinkImage.types[0].type.name;
+                }
+               
             } catch {
-                console.log("erro na solicitação da api das img")
+                console.log("erro na solicitação da api dos detalhes do pokemon")
                 return null;
             }
         }
 
-
         const getArrayLinksImages = async () => {
             if (pokemon && Array.isArray(pokemon)) {
+                const link = true;
                 const newLinksImages = await Promise.all(
                     pokemon.map(async (item) => {
-                        return getLinkImage(item.name);
+                        return getPokeDetails(item.name, link);
                     })
                 );
-
                 setLinksImages(newLinksImages)
-
             } else {
                 console.log("O array pokemon está indefinido ou não é um array.");
             }
         };
 
-        getArrayLinksImages()
+        const getTypesPokemons = async () => {
+            if (pokemon && Array.isArray(pokemon)) {
 
+                const newPokemonTypes = await Promise.all(
+                    pokemon.map(async (item) => {
+                        return getPokeDetails(item.name);
+                    })
+                );
+
+                setPokeType(newPokemonTypes)
+            } else {
+                console.log("O array pokemon está indefinido ou não é um array.");
+            }
+        }
+
+        getArrayLinksImages();
+        getTypesPokemons();
 
     }, [pokemon])
-
 
     useEffect(() => {
 
         const newPokeImg = pokemon.map((poke, i) => ({
             key: Math.floor(10000 * Math.random()),
             nome: poke.name,
-            link: linksImages[i]
+            link: linksImages[i],
+            type: pokeType[i]
         }));
 
         setPokeImg(newPokeImg);
-    }, [linksImages])
+
+    }, [pokeType])
 
 
     useEffect(()=>{
         setTimeout(() => {
             setLoading(true);
-        }, 1500)
-         
+        }, 1000)
     }, [pokeImg])
 
 
@@ -108,9 +129,9 @@ const Pokedex = () => {
                     <Loading />
                     :
                     pokeImg.map((pokeImgs) => (
-                        <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} />
-                    ))
-            }
+                        <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type}/>
+                    )) 
+            } 
         </div>
     )
 }
