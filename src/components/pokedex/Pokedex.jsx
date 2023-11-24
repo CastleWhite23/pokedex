@@ -15,7 +15,7 @@ const Pokedex = () => {
     const [pokeType, setPokeType] = useState([]);
     const [pokeImg, setPokeImg] = useState([{}]);
     const [loading, setLoading] = useState(false);
-    const api = "https://pokeapi.co/api/v2/pokemon/?offset=60&limit=60";
+    const api = "https://pokeapi.co/api/v2/pokemon/?offset=80&limit=80";
 
     useEffect(() => {
         setLoading(false);
@@ -55,6 +55,7 @@ const Pokedex = () => {
                 if(link){
                     return await pokemonLinkImage.sprites.front_default;
                 }else{
+                    console.log(pokemonLinkImage.types)
                     return await pokemonLinkImage.types[0].type.name;
                 }
                

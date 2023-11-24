@@ -5,13 +5,21 @@ const Card = ( { name, link, type }) =>{
         <div className="card"
             style={{
                 backgroundColor:
-                    type == "normal" ? "gray" 
-                    : type == "poison" ? "purple"
+                type == "water" ? "#0793ac" 
+                    : type == "poison" ? "#af3cfc"
                     : type == "fire" ? "orange" 
-                    : type == "electric" ? "yellow" 
-                    : type == "ground" ? "brown" 
-                    : type == "fairy" ? "pink" 
-                    : type == "water" ? "blue" : ""
+                    : type == "electric" ? "#afd30f" 
+                    : type == "ground" ? "#5e3434" 
+                    : type == "fairy" ? "#dc84e7" 
+                    : type == "psychic" ? "#ac9307" 
+                    : type == "dragon " ? "#ac0707" 
+                    : type == "steel " ? "#414141" 
+                    : type == "ghost " ? "#476d53" 
+                    : type == "fighting" ? "#4e476d" 
+                    : type == "flying " ? "#6d475d" 
+                    : type == "grass " ? "#015a06" 
+                    : "gray" 
+                   
             }}
         >
             <img src={ link } alt="img do pokemon" />
