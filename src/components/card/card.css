@@ -1,4 +1,5 @@
 .card{
+    max-width: 50%;
     width: 20%;
     height: 300px;
     background-color: #ffffff;

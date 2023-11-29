@@ -1,9 +1,6 @@
 import Card from '../card/Card';
 import LoadMore from '../loadMore/loadMore';
 import Loading from '../loading/Loading';
-
-
-
 import './pokedex.css'
 import { useEffect, useState } from 'react';
 
@@ -16,55 +13,65 @@ const Pokedex = () => {
     const [pokeType, setPokeType] = useState([]);
     const [pokeImg, setPokeImg] = useState([{}]);
     const [loading, setLoading] = useState(false);
-    const api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=15";
+    //const [offset, setOffset] = useState(0);
+    const [limit, setLimit] = useState(10);
+    const [api, setApi] = useState("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=15");
+    //offset responsavel por quais pokemons vão aparecer
+    //limit é responsavel pelo quantidade de pokemons
 
-    // const handleClick = () =>{
-    //      api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10";
-    
-    //     return 
-    // }
+
+    //fazer com que ao clicar retorne um novo link da api com o limit alterado
+    const handleClickLoadMore = (e) => {
+        e.preventDefault();
+        const newLimit = limit + 5;
+        setLimit(newLimit)
+          
+    }
+
+    useEffect(()=>{
+        const newApi = `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=${limit}`;
+        setApi(newApi);
+    }, [limit])
 
     useEffect(() => {
+    
         setLoading(false);
-       
-
-        ///
 
         const getPokemonsData = async (api) => {
             try {
                 const res = await fetch(api);
-                const pokemonsData = await res.json()
-
+                const pokemonsData = await res.json();
+                // console.log(pokemonsData);
                 const pokemons = await pokemonsData.results;
                 setPokemon(pokemons);
 
             } catch {
-                console.log("erro na solicitação da api")
+                console.log("erro na solicitação da api");
                 return;
             }
         }
 
         getPokemonsData(api)
 
-
-    }, [])
+    }, [api])
 
     useEffect(() => {
 
-        const getPokeDetails= async (name, link = null) => {
+        const getPokeDetails = async (name, link = null) => {
             try {
                 const apiLinkImage = "https://pokeapi.co/api/v2/pokemon/" + name;
                 const res = await fetch(apiLinkImage);
                 const pokemonLinkImage = await res.json();
-                
+
                 //pegar por aqui o tipo do pokemon
                 // console.log(await pokemonLinkImage.sprites.front_default)
-                if(link){
+                if (link) {
                     return await pokemonLinkImage.sprites.front_default;
-                }else{
+                } else {
+                    console.log(pokemonLinkImage.types[0].type.name)
                     return await pokemonLinkImage.types[0].type.name;
                 }
-               
+
             } catch {
                 console.log("erro na solicitação da api dos detalhes do pokemon")
                 return null;
@@ -118,17 +125,13 @@ const Pokedex = () => {
 
     }, [pokeType])
 
-
-    useEffect(()=>{
+    useEffect(() => {
         setTimeout(() => {
             setLoading(true);
         }, 1000)
     }, [pokeImg])
 
 
-    const handleClickLoadMore = () => {
-        console.log("carregue");
-    }
 
 
     //pegar todos os nomes dos pokemons e realizar uma chamada a api com cada nome e retornar o sprite.front_default
@@ -140,16 +143,16 @@ const Pokedex = () => {
                         <Loading />
                         :
                         pokeImg.map((pokeImgs) => (
-                            <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type}/>
+                            <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type} />
                         ))
                 }
-                
+
             </div>
             {
-                    loading?
-                        <LoadMore onCLick={handleClickLoadMore()}/>
+                loading ?
+                    <LoadMore onClick={handleClickLoadMore}/>
                     : null
-                }
+            }
         </div>
     )
 }

@@ -1,9 +1,9 @@
 import "./loadMore.css"
 
-const LoadMore = () =>{
+const LoadMore = ({ onClick }) =>{
     return(
         <div className="loadMore">
-            <button>Carregar Mais</button>
+            <button onClick={onClick}>Carregar Mais</button>
         </div>
     )
 };

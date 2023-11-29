@@ -19,6 +19,7 @@ const Card = ( { name, link, type }) =>{
                     : type == "flying" ? "#6d475d" 
                     : type == "grass" ? "#015a06" 
                     : type == "bug" ? "#29c75e" 
+                    : type == "normal" ? "#808080" 
                     : "#fff" 
                    
             }}
