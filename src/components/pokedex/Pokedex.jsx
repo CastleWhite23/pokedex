@@ -26,10 +26,10 @@ const Pokedex = () => {
         const newLimit = limit + 5;
         //setLoadMore(true)
         setLimit(newLimit)
-          
+
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const newApi = `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=${limit}`;
         setApi(newApi);
     }, [limit])
@@ -129,7 +129,7 @@ const Pokedex = () => {
         setTimeout(() => {
             setLoading(true);
         }, 1300)
-            
+
         setLoadMore(true);
     }, [pokeImg])
 
@@ -149,19 +149,19 @@ const Pokedex = () => {
                                 <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type} />
                             ))
                     }
-                    
+
                 </div>
                 <div className="footer-pokedex">
                     {
-                        !loadMore ? 
+                        !loadMore ?
                             <Loading />
-                        : null
+                            : null
                     }
                 </div>
             </div>
             {
-                loading ?
-                    <LoadMore onClick={handleClickLoadMore}/>
+                loading?
+                    <LoadMore onClick={handleClickLoadMore} />
                     : null
             }
         </div>
