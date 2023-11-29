@@ -16,7 +16,7 @@ const Pokedex = () => {
     const [pokeType, setPokeType] = useState([]);
     const [pokeImg, setPokeImg] = useState([{}]);
     const [loading, setLoading] = useState(false);
-    const api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10";
+    const api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=15";
 
     // const handleClick = () =>{
     //      api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10";
