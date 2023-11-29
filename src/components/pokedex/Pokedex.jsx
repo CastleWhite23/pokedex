@@ -62,7 +62,6 @@ const Pokedex = () => {
                 if(link){
                     return await pokemonLinkImage.sprites.front_default;
                 }else{
-                    console.log(pokemonLinkImage.types)
                     return await pokemonLinkImage.types[0].type.name;
                 }
                
@@ -127,24 +126,30 @@ const Pokedex = () => {
     }, [pokeImg])
 
 
+    const handleClickLoadMore = () => {
+        console.log("carregue");
+    }
 
 
     //pegar todos os nomes dos pokemons e realizar uma chamada a api com cada nome e retornar o sprite.front_default
     return (
-        <div className='pokedex'>
+        <div>
+            <div className='pokedex'>
+                {
+                    !loading ?
+                        <Loading />
+                        :
+                        pokeImg.map((pokeImgs) => (
+                            <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type}/>
+                        ))
+                }
+                
+            </div>
             {
-                !loading ?
-                    <Loading />
-                    :
-                    pokeImg.map((pokeImgs) => (
-                        <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type}/>
-                    )) 
-            } 
-            {/* {
-                loading?
-                <LoadMore onCLick={handleClick()}/>
-                : null
-            } */}
+                    loading?
+                        <LoadMore onCLick={handleClickLoadMore()}/>
+                    : null
+                }
         </div>
     )
 }

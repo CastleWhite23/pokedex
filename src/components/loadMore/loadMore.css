@@ -10,6 +10,7 @@
     border-radius: 10px;
     transition: .2s all ease-in-out;
     cursor: pointer;
+    margin-top: 1rem;
 }
 
 .loadMore button:hover{
