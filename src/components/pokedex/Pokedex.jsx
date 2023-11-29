@@ -13,9 +13,9 @@ const Pokedex = () => {
     const [pokeType, setPokeType] = useState([]);
     const [pokeImg, setPokeImg] = useState([{}]);
     const [loading, setLoading] = useState(false);
-    //const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(10);
     const [api, setApi] = useState("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=15");
+    const [loadMore, setLoadMore] = useState(false)
     //offset responsavel por quais pokemons vão aparecer
     //limit é responsavel pelo quantidade de pokemons
 
@@ -24,6 +24,7 @@ const Pokedex = () => {
     const handleClickLoadMore = (e) => {
         e.preventDefault();
         const newLimit = limit + 5;
+        //setLoadMore(true)
         setLimit(newLimit)
           
     }
@@ -34,8 +35,8 @@ const Pokedex = () => {
     }, [limit])
 
     useEffect(() => {
-    
-        setLoading(false);
+        setLoadMore(false);
+        setLoadMore(false);
 
         const getPokemonsData = async (api) => {
             try {
@@ -68,7 +69,6 @@ const Pokedex = () => {
                 if (link) {
                     return await pokemonLinkImage.sprites.front_default;
                 } else {
-                    console.log(pokemonLinkImage.types[0].type.name)
                     return await pokemonLinkImage.types[0].type.name;
                 }
 
@@ -128,7 +128,9 @@ const Pokedex = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(true);
-        }, 1000)
+        }, 1300)
+            
+        setLoadMore(true);
     }, [pokeImg])
 
 
@@ -138,15 +140,24 @@ const Pokedex = () => {
     return (
         <div>
             <div className='pokedex'>
-                {
-                    !loading ?
-                        <Loading />
-                        :
-                        pokeImg.map((pokeImgs) => (
-                            <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type} />
-                        ))
-                }
-
+                <div className="pokedex-content">
+                    {
+                        !loading ?
+                            <Loading />
+                            :
+                            pokeImg.map((pokeImgs) => (
+                                <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type} />
+                            ))
+                    }
+                    
+                </div>
+                <div className="footer-pokedex">
+                    {
+                        !loadMore ? 
+                            <Loading />
+                        : null
+                    }
+                </div>
             </div>
             {
                 loading ?
