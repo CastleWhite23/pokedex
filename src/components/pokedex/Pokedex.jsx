@@ -1,4 +1,5 @@
 import Card from '../card/Card';
+import LoadMore from '../loadMore/loadMore';
 import Loading from '../loading/Loading';
 
 
@@ -15,7 +16,13 @@ const Pokedex = () => {
     const [pokeType, setPokeType] = useState([]);
     const [pokeImg, setPokeImg] = useState([{}]);
     const [loading, setLoading] = useState(false);
-    const api = "https://pokeapi.co/api/v2/pokemon/?offset=80&limit=80";
+    const api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10";
+
+    // const handleClick = () =>{
+    //      api = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10";
+    
+    //     return 
+    // }
 
     useEffect(() => {
         setLoading(false);
@@ -133,6 +140,11 @@ const Pokedex = () => {
                         <Card key={pokeImgs.key} name={pokeImgs.nome} link={pokeImgs.link} type={pokeImgs.type}/>
                     )) 
             } 
+            {/* {
+                loading?
+                <LoadMore onCLick={handleClick()}/>
+                : null
+            } */}
         </div>
     )
 }

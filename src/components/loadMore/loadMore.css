@@ -1,0 +1,17 @@
+.loadMore button{
+    width: 200px;
+    background-color: rgb(41, 41, 41);
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+}
+
+.loadMore button:hover{
+   opacity: .5;
+}
